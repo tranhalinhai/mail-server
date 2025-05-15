@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Mail" default="default" basedir=".">
+    <description>Builds, tests, and runs the project Mail.</description>
+    <import file="nbproject/build-impl.xml"/>
+
+    <!-- Định nghĩa classpath (thêm thư viện SQLite nếu cần) -->
+    <path id="classpath">
+        <pathelement location="lib/sqlite-jdbc-3.49.1.0.jar"/>
+        <!-- Thêm các thư viện khác nếu cần -->
+    </path>
+
+    <!-- Target biên dịch -->
+    <target name="compile" depends="init" description="compile the source code">
+        <echo message="Compiling with JavaFX support..."/>
+        <javac 
+            destdir="${build.classes.dir}" 
+            srcdir="${src.dir}" 
+            encoding="${source.encoding}"
+            source="21"  <!-- Thay đổi nếu bạn dùng JDK khác -->
+            target="21"  <!-- Thay đổi nếu bạn dùng JDK khác -->
+            debug="${javac.debug}" 
+            deprecation="${javac.deprecation}" 
+            optimize="${javac.optimize}"
+            failonerror="true"
+        >
+            <classpath refid="classpath"/>
+            <compilerarg value="--module-path"/>
+            <compilerarg value="C:\javafx-sdk-21.0.6\lib"/>  <!-- Sửa đường dẫn này! -->
+            <compilerarg value="--add-modules"/>
+            <compilerarg value="javafx.controls,javafx.fxml,javafx.graphics,javafx.base,javafx.web,javafx.media,javafx.swing"/>
+        </javac>  <!-- Đóng tag ở đây! -->
+    </target>
+
+    <!-- Target chạy -->
+    <target name="run" depends="compile" description="run the compiled code">
+        <echo message="Running with JavaFX support..."/>
+        <java 
+            classname="${main.class}" 
+            fork="true"
+            failonerror="true"
+        >
+            <classpath refid="classpath"/>
+            <jvmarg value="--module-path"/>
+            <jvmarg value="C:\javafx-sdk-21.0.6\lib"/>  <!-- Sửa đường dẫn này! -->
+            <jvmarg value="--add-modules"/>
+            <jvmarg value="javafx.controls,javafx.fxml,javafx.graphics,javafx.base,javafx.web,javafx.media,javafx.swing"/>
+        </java>
+    </target>
+
+    <!-- Override target default để đảm bảo nó chạy target run -->
+    <target name="default" depends="run" description="Build and run the application"/>
+
+</project>
